@@ -1,0 +1,20 @@
+AddHandler cgi-script .cgi
+AddHandler cgi-script .py
+Options +ExecCGI +FollowSymlinks
+ 
+RewriteEngine on
+
+# Redirect to HTTPS.
+
+RewriteCond %{HTTPS} !=on
+RewriteRule ^/?(.*)	https://%{SERVER_NAME}/$1	[R,L]
+
+# If there is a PHP page by this name, do it directly.
+
+RewriteCond /home/timrprobocom/tualatinvalleycouncil.org/$1.php -f
+RewriteRule ^(.*)$       $1.php   [L]
+
+# If there is an HTML page by this name, do it directly.
+
+RewriteCond /home/timrprobocom/tualatinvalleycouncil.org/$1.html -f
+RewriteRule ^(.*)$       $1.html   [L]
